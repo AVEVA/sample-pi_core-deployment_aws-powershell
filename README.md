@@ -1,4 +1,4 @@
-![OSIlogo.png](./src/images/OSIlogo.png)
+![OSIlogo.png](./images/OSIlogo.png)
 
  # OSIsoft PI System on Amazon Web Services
 
@@ -13,13 +13,13 @@ PI System Deployment Sample for AWS is intended for use by existing OSIsoft cust
 
 The deployment samples install core PI System components, such as PI Data Archive and PI Asset Framework. 
 
-| ![AWSNonHAArchitectureDiagram.png](./src/images/AWSNonHAArchitectureDiagram.png) | 
+| ![AWSNonHAArchitectureDiagram.png](./images/AWSNonHAArchitectureDiagram.png) | 
 |:--:| 
 | *Non-HA Architecture Diagram* |
 
 Optionally, the deployment sample supports the ability to deploy PI System in a High Availability (HA) configuration. 
 
-| ![AWSHAArchitectureDiagram.png](./src/images/AWSHAArchitectureDiagram.png) | 
+| ![AWSHAArchitectureDiagram.png](./images/AWSHAArchitectureDiagram.png) | 
 |:--:| 
 | *HA Architecture Diagram* |
 
