@@ -2,6 +2,8 @@
 
  # OSIsoft PI System on Amazon Web Services
 
+**Version:** 1.0.1
+
 PI System Deployment Sample for Amazon Web Services (AWS) was created by OSIsoft, LLC in collaboration with Amazon Web Services. 
 Deployment samples are automated reference deployments that use AWS CloudFormation templates to deploy key technologies on AWS, following AWS best practices.
 
