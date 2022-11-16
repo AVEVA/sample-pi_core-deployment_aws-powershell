@@ -3,6 +3,4 @@
 
 # These owners will be the default owners for everything in the repo.
 * @osisoft/product-readiness-guild
-* matzen@osisoft.com
-* amoradi@osisoft.com
-* rputcha@osisoft.com
+* @osisoft/pi-system-deployment-samples
