@@ -1490,7 +1490,7 @@
                 "Handle": {
                     "Ref": "DomainController1WaitHandle"
                 },
-                "Timeout": "3600"
+                "Timeout": "2700"
             }
         },
         "DomainController1WaitHandle": {
