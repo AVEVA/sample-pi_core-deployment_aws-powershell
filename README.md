@@ -3,12 +3,12 @@
  # OSIsoft PI System on Amazon Web Services
 
 PI System Deployment Sample for Amazon Web Services (AWS) was created by OSIsoft, LLC in collaboration with Amazon Web Services. 
-Deployment samples are automated reference deployments that use AWS CloudFormation templates to deploy key technologies on AWS, following AWS best practices.
+Deployment samples are automated reference deployments that use AWS CloudFormation templates to deploy key PI System technologies on AWS, following AWS best practices.
 
 ## Overview
 This deployment guide provides step-by-step instructions for deploying a PI System on the AWS environment for a new Virtual Private Cloud (VPC) infrastructure using PI System Deployment Samples for AWS. 
 
-PI System Deployment Sample for AWS is intended for use by existing OSIsoft customers to support quick and iterative testing and prototyping purposes. As development environments move to the cloud, PI Admins need easy and quick ways to deploy resources for their testing cycles. The PI System Deployment Sample for AWS provides an easy way to deploy a full PI System repeatedly and reliably to the AWS cloud for this type of development cycle. 
+PI System Deployment Sample for AWS is intended for use by new and existing OSIsoft customers to support quick and iterative testing and prototyping purposes. As development environments move to the cloud, PI Admins need easy and quick ways to deploy resources for their testing cycles. The PI System Deployment Sample for AWS provides an easy way to deploy a full PI System repeatedly and reliably to the AWS cloud for this type of development cycle. 
 >**Note:** The deployment samples are meant for testing and prototyping purposes, and not meant to be used within a production environment.
 
 The deployment samples install core PI System components, such as PI Data Archive and PI Asset Framework. 
@@ -26,7 +26,7 @@ Optionally, the deployment sample supports the ability to deploy PI System in a 
 >**Note:** The AWS CloudFormation template discussed in this guide (*DSMasterStack.template*) is meant for deployment with a new AWS infrastructure, and not meant to be used on an existing AWS environment.
 
 ### OSIsoft PI System on AWS
-With PI System Deployment Sample for AWS, you deploy a PI System on a new VPC (an end-to-end deployment). The deployment template for a new VPC (`DSMasterStack.template`) builds a new AWS environment consisting of the VPC, private and public subnets, NAT gateways, Internet gateway, security groups, bastion hosts, and other infrastructure components essential for the new PI System. In addition, the deployment includes Active Directory, SQL Server, PI Data Archive, PI AF, PI Analysis Service, PI Vision, and Remote Desktop Service into this new VPC.
+With the PI System Deployment Sample for AWS, you deploy a PI System on a new VPC (an end-to-end deployment). The deployment template for a new VPC (`DSMasterStack.template`) builds a new AWS environment consisting of the VPC, private and public subnets, NAT gateways, Internet gateway, security groups, bastion hosts, and other infrastructure components essential for the new PI System. In addition, the deployment includes Active Directory, SQL Server, PI Data Archive, PI AF, PI Analysis Service, PI Vision, and Remote Desktop Service into this new VPC.
 
 Per standard security practices, the environment is accessible via Remote Desktop Service EC2 instances. 
 
@@ -39,13 +39,13 @@ You are encouraged to estimate the additional AWS costs associated with PI Syste
 
 > **Tip:** After you deploy using PI System Deployment Samples for AWS, OSIsoft recommends that you enable the [AWS Cost and Usage Report](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/billing-reports-gettingstarted-turnonreports.html) to track costs associated with this template. This report delivers billing metrics to an S3 bucket in your account. It provides cost estimates based on usage throughout each month, and finalizes the data at the end of the month. For more information about the report, see the [AWS documentation](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/billing-reports-costusage.html). 
 
-To use PI System Deployment Samples for AWS, you must be an existing OSIsoft customer and have access to the OSIsoft [Customer Portal](https://customers.osisoft.com). Access to the OSIsoft Customer Portal is required to download the necessary software, as well as to generate and download a full license for your PI System after the deployment. If you are new to the OSIsoft PI System, please reach out to us to request further information at the OSIsoft [Contact Page](https://www.osisoft.com/about-osisoft/contact-us/).
+To use PI System Deployment Samples for AWS, you must be an existing OSIsoft customer and have access to the OSIsoft [Customer Portal](https://my.osisoft.com). Access to the OSIsoft Customer Portal is required to download the necessary software, as well as to generate and download a full license for your PI System after the deployment. If you are new to the OSIsoft PI System, please reach out to us to request further information at the OSIsoft [Contact Page](https://www.osisoft.com/about-osisoft/contact-us/).
 
 ## Deployment Architecture for PI System on AWS
 PI System Deployment Sample for AWS creates the following infrastructure:
 
 ### Non-HA Deployment Architecture
-* A virtual private cloud configured with public and private subnets according to AWS best practices, to provide you with your own virtual network on AWS.
+* A virtual private cloud (VPC) configured with public and private subnets according to AWS best practices, to provide you with your own virtual network on AWS.
 * An Internet gateway to allow access to the Internet contained in the public subnets. This gateway is used by the bastion hosts to send and receive traffic. A bastion host is a server instance that acts as the primary access point from the Internet and as a proxy to the other server instances.
 * In the public subnets, managed Network Address Translation (NAT) gateways to allow outbound Internet access for resources in the private subnets.
 * In the public subnets, a Remote Desk Service (RDGW) host to allow inbound Remote Desktop Protocol (RDP) access to server instances in public and private subnets.
@@ -58,13 +58,13 @@ PI System Deployment Sample for AWS creates the following infrastructure:
 ### HA Deployment Architecture
 If selected, an HA architecture spans two Availability Zones, each zone consisting of one or more discrete data centers, each with redundant power, networking, and connectivity, housed in separate facilities. 
 >**Note:** If High Availability is not specified during deployment, a single  Availability Zone is used.
-* A virtual private cloud configured with public and private subnets according to AWS best practices, to provide you with your own virtual network on AWS.
+* A virtual private cloud (VPC) configured with public and private subnets according to AWS best practices, to provide you with your own virtual network on AWS.
 * An Internet gateway to allow access to the Internet contained in the public subnets. This gateway is used by the bastion hosts to send and receive traffic. A bastion host is a server instance that acts as the primary access point from the Internet and as a proxy to the other server instances.
 * In the public subnets, managed Network Address Translation (NAT) gateways to allow outbound Internet access for resources in the private subnets.
 * In the public subnets, a pair of Remote Desk Service (RDGW) hosts to allow inbound Remote Desktop Protocol (RDP) access to server instances in public and private subnets.
 * In the public subnet(s), a pair of PI Vision servers (as bastion nodes) used for data visualization accessible via HTTPS through an Internet-facing Elastic Load Balancer (EBL).
 * In the private subnet(s), a PI Data Archive server configured as a PI Data Archive Collective for high availability, configured to OSIsoft field service technical standards.
-* In the private subnet(s), PI Asset Framework (AF) server exposed behind an internal Elastic Load Balancer (EBL).
+* In the private subnet(s), PI Asset Framework (AF) server exposed behind an internal Elastic Load Balancer (ELB).
 * In the private subnet(s), a standalone PI Analysis Service present to handle PI Analysis Service configured on PI AF.
 * Identity and Access Management (IAM) roles to provide permissions to access AWS resources. For example, to permit the virtual server instances to read from the S3 buckets containing the install media files and PI license.
 
@@ -76,7 +76,7 @@ PI System Deployment Sample for AWS require that you have access to:
 * PI Server install kit
 * PI Vision install kit
 * Temporary PI license
-* PI System Deployment Tests zip file: You can find this available at the [OSIsoft GitHub Repository](https://github.com/osisoft/sample-pi_core-pi_core_deployment_tests-powershell)
+* PI System Deployment Tests: You can find this available at the [OSIsoft GitHub Repository](https://github.com/osisoft/sample-pi_core-pi_core_deployment_tests-powershell)
 
 >**Note:** The deployment sample will first use the temporary PI license to deploy a  PI System on AWS. After the deployment is finished, you must generate a full PI license file through the OSIsoft Customer Portal using the Machine Signature File created from your deployed PI Data Archive(s) in your AWS VPC. This process is discussed later in this guide.
 
@@ -126,9 +126,9 @@ For more information on this, see the Costs and licenses section of [SQL Server 
 To deploy the OSIsoft PI System Deployment Sample for AWS, you will need to download and stage the associated modules.
 
 Download and extract the deployment sample files:
-1. Go to the [OSIsoft GitHub PI System on Amazon Web Services repository](https://github.com/osisoft/sample-pi_core-pi_core_deployment-amazon_web_services).
-2. Click **Clone or Download** and then **Download Zip** to download the contents of this GitHub repository, and select the target location on your local machine.
-3. Extract the **sample-pi_core-pi_core_deployment-amazon_web_services-master** folder to your local machine.
+1. Go to the [OSIsoft GitHub repository for PI System Deployment Samples](https://github.com/osisoft/sample-pi_core-deployment_aws-powershell).
+2. Click  the **Code** button and then **Download Zip** to download the contents of this GitHub repository, and select the target location on your local machine.
+3. Extract the **sample-pi_core-deployment_aws-powershell** folder to your local machine.
 
 Your PI System on AWS deployment is based on the AWS stack. A stack is the collection of the AWS resources associated with a PI System deployment. 
 
@@ -140,19 +140,16 @@ The following list highlights the files and respective folders found in the OSIs
 * .\templates - Contains a number of different CloudFormation templates that define the AWS stack, which in turn determine the end deployment. 
 * MasterStackReadme.md - This deployment guide.
 * README.md - The introductory readme file for the repository.
-* TestParametersReadme.md - The readme file on how to run a test on the parameters of your S3 buckets using the `TestParameters.ps1` script. The script is meant as a tool to aid the PI System Engineers who are deploying the Master Stack template on AWS. Running this script validates the contents of the S3 buckets the user must create before using the AWS Deployment Sample successfully.
+* TestParametersReadme.md - Reserved for future use. Do not attempt to use the TestParameters.ps1 script that is described in the readme.
 
 These files and folders must be stored in an S3 bucket in your AWS account for the deployment to succeed. To do this:
 
 1.	Click **Storage** > **S3** on the [Amazon S3 console](https://s3.console.aws.amazon.com/s3/) to access the list of S3 buckets for your AWS account.
-2.	Click **Create bucket** to create an S3 bucket and name it with a *BucketName*, such as `s3bucket-osideploymentsamples-username`. For instructions, see the [Amazon S3 documentation](https://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html). Record the *BucketName*. You will need it when filling out the AWS template. Take care as *BucketName* is case-sensitive!
-2. Click **Create folder** to create a folder in this bucket and name it with a *FolderName* such as `DeploymentSample` into which you will upload the files. Record the *FolderName*. You will need it when filling out the AWS template.
-3. Separately, navigate to the OSIsoft GitHub repository for AWS [here](https://github.com/osisoft/sample-pi_core-pi_core_deployment-amazon_web_services).
-4. Click **Clone or download** and then **Download as Zip** to download the contents of this GitHub repository, and select the target location on your local machine. 
-5. Extract the contents of this zip file onto your local machine. Take note of the **sample-pi_core-pi_core_deployment-amazon_web_services-master** folder location as you will need to upload a local copy of the `DSMasterStack.template` in the `template` folder in a later step. 
-5. Upload the extracted contents in the **sample-pi_core-pi_core_deployment-amazon_web_services-master** folder into the newly-created folder in your S3 bucket. 
+2.	Click **Create bucket** to create an S3 bucket and name it with a \<BucketName\>, such as `s3bucket-osideploymentsamples-username`. For instructions, see the [Amazon S3 documentation](https://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html). Record the \<BucketName\>. You will need it when filling out the AWS template. Take care as \<BucketName\> is case-sensitive!
+3. Click **Create folder** to create a folder in this bucket and name it with a \<FolderName\>. _(In parameters, default is `DeploymentSample`, case sensitive)_ into which you will upload the files. Record the \<FolderName\>. You will need it when filling out the AWS template.
+4. Upload the previously extracted contents in the **sample-pi\_core-deployment\_aws-powershell-main** folder into \<FolderName\> in your S3 bucket. 
    
-   > **TIP:** Some users who have adblock extensions installed on their browser have reported errors when uploading the Active Directory scripts. Temporarily disabling the adblock extension fixes this problem. 
+   > **TIP:** Some users who have adblock extensions installed on their browser have reported errors when uploading the Active Directory scripts. Temporarily disabling the adblock extension fixes this problem.
    
 Once the upload is complete, ensure that the subfolders have been created directly beneath the folder you created in step 2. Your folder structure should resemble the following directory:
 
@@ -173,48 +170,40 @@ Next, you will need to download the following PI System files:
 * PI Server install kit
 * PI Vision install kit
 * Temporary license file 
-* PI System Deployment Tests zip file
+* PI System Deployment Tests
 
 The following sections describe the process for finding and staging these files.
 >**Note:** The deployment sample will use the temporary PI license to deploy PI System on AWS to install PI System. When a successful PI deployment is installed, you will be able to generate a full PI license file through the OSIsoft Customer Portal using the Machine Signature File created from your deployed PI Data Archive(s).
 
 The deployment sample must have access to the aforementioned files in an S3 bucket in your AWS account.
 
->**Note:** Ensure you download and use the exact version of the PI Server (PI Server 2018 SP3 Patch 3) and PI Vision (PI Vision 2020) install kits described in this guide!
+>**Note:** Ensure you download and use the exact version of the PI Server (AVEVA-PI Server 2018 SP3 Patch 4) and PI Vision (AVEVA-PI Vision 2022) install kits described in this guide!
 
 #### Create PI Install Folders in the S3 Bucket
 1.	From the [Amazon Management Console](https://console.aws.amazon.com/), click **Storage** > **S3**.
 2.	Click **Create bucket** to create another S3 bucket. This bucket will hold your setup kits necessary for PI System deployment. 
-3. Name your new bucket with a *SetupKitsBucketName*, such as `s3bucket-osisetupkits-username`. For instructions, see the [Amazon S3 documentation](https://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html). Record the *SetupKitsBucketName*. You will need the name of this bucket when filling out the template.
-4. Click **Create folder** to create a folder with a *SetupKitsFolderName* such as `osisetupkits` which will hold the PI install kits and the temporary license file. Record this *SetupKitsFolderName*. You will need it when filling out the AWS stack parameters.
-5. In this folder, create two new folders with the following exact *FolderNames*: `PIServer` and `PIVision`. To create a new folder, click **Create folder**.
+3. Name your new bucket with a \<SetupKitsBucketName\>, such as `s3bucket-osisetupkits-username`. For instructions, see the [Amazon S3 documentation](https://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html). Record the \<SetupKitsBucketName\>. You will need the name of this bucket when filling out the template.
+4. Click **Create folder** to create a folder with a \<SetupKitsFolderName\>. _(In parameters, default is `osisetupkits`, case sensitive)_ which will hold the PI install kits and the temporary license file. Record this \<SetupKitsFolderName\>. You will need it when filling out the AWS stack parameters.
+5. In this folder, create two new folders with the following exact \<FolderNames\>: `PIServer` and `PIVision`. To create a new folder, click **Create folder**.
 >**Note:** Use these exact folder names as indicated. These folder names are case sensitive!
 
 #### Download and Stage the PI Server Install Kit and Temporary License File
-1. From the **Products** page on the OSIsoft [Customer Portal](https://my.osisoft.com), click on the product row for **PI Server**.
-2. Click the **ALL VERSIONS** tab to display the **PI Server 2018 SP3 Patch 3** version of PI Server.
-3. On the row corresponding to the **PI Server 2018 SP3 Patch 3** version of the install kit, click **Download** to display the **License and Service Agreements** page.
-4. Agree to the **OSIsoft, LLC. (“OSIsoft”) Software License and Services Agreement** and click
-**Download**
-5. When prompted to run or save the executable setup file, click **Save** and click **OK**.
-6. Locate your temporary PI license file and rename the file to **pilicense.dat**. If you do not have a temporary PI license, please contact OSIsoft Tech Support to obtain a temporary license for the deployment. OSIsoft Tech Support can be reached at the OSIsoft [Customer Portal](https://my.osisoft.com).
-7. Upload your PI Server install kit and your renamed PI license file into the `PIServer` folder.
+1. Go to OSIsoft [Customer Portal](https://my.osisoft.com).
+2. Download **AVEVA-PI Server 2018 SP3 Patch 4**.
+3. When prompted to run or save the executable setup file, click **Save** and click **OK**.
+4. Locate your temporary PI license file and rename the file to **pilicense.dat**. If you do not have a temporary PI license, please contact OSIsoft Tech Support to obtain a temporary license for the deployment. OSIsoft Tech Support can be reached at the OSIsoft [Customer Portal](https://my.osisoft.com).
+5. Upload your PI Server install kit and your renamed PI license file into the `PIServer` folder.
 
 #### Download and Stage the PI Vision Install Kit
-1. From the **Products** page on the OSIsoft [Customer Portal](https://my.osisoft.com), click on the product row for **PI Vision**.
-2. Select the  **ALL VERSIONS** tab to display the **PI Vision 2020** version of PI Vision.
-3. On the row corresponding to the **PI Vision 2020** version of the install kit, click **Download** to display the **License and Service Agreements** page.
-4. Agree to the **OSIsoft, LLC. (“OSIsoft”) Software License and Services Agreement** and click **Download**.
-5. When prompted to run or save the executable setup file, click **Save** and click **OK**.
-6. Upload your PI Vision installer into the `PIVision` folder.
+1. Go to OSIsoft [Customer Portal](https://my.osisoft.com).
+2. Download **AVEVA-PI Vision 2022**.
+3. When prompted to run or save the executable setup file, click **Save** and click **OK**.
+4. Upload your PI Vision installer into the `PIVision` folder.
 
-#### Download and Stage PI System Deployment Tests File
-
-1. Go to the [OSIsoft GitHub PI System on Amazon Web Services repository](https://github.com/osisoft/sample-pi_core-pi_core_deployment-amazon_web_services).
-2. Click **Clone or Download** and then **Download Zip** to download the contents of this GitHub repository, and select the target location on your local machine. The deployment samples will configure and run the deployment tests for your environment.
-3. Extract the **sample-pi_core-pi_core_deployment-amazon_web_services-master** folder to your local machine.
-4. Locate the folder called "sample-pi_core-pi_core_deployment-amazon_web_services-master", right click on it and select "Send to > Compressed (zipped) folder". The filename should be sample-pi_core-pi_core_deployment-amazon_web_services-master.zip.
-5. Upload this zip file into the *SetupKitsFolderName* folder in your S3 bucket on the [Amazon Management Console](https://s3.console.aws.amazon.com/s3/). 
+#### Download and Stage PI System Deployment Tests
+1. Go to the OSIsoft GitHub repository for PI System Deployment Tests at this [page](https://github.com/osisoft/sample-pi_core-pi_core_deployment_tests-powershell).
+2. Click the **Code** button and then **Download Zip** to download the contents of this GitHub repository onto your local machine as a zip file. The deployment samples will configure and run the deployment tests for your environment.
+3. Upload this zip file into the \<SetupKitsFolderName\> folder in your S3 bucket on the [Amazon Management Console](https://s3.console.aws.amazon.com/s3/). 
 
 #### Verify your S3 Bucket
 Verify that your bucket has a hierarchy with the files and folders matching the following:
@@ -224,26 +213,27 @@ Verify that your bucket has a hierarchy with the files and folders matching the 
 |--> <SetupKitsFolderName>
    |--> PIServer
       |--> pilicense.dat
-      |--> PI-Server_2018-SP3-Patch-3_.exe
+      |--> AVEVA-PI-Server_2018-SP3-Patch-4_.exe
    |--> PIVision
-      |--> PI-Vision_2020_.exe
-   |--> PI-System-Deployment-Tests.zip
+      |--> AVEVA-PI-Vision_2022_.exe
+   |--> sample-pi_core-pi_core_deployment_tests-powershell-main.zip
 ```
 ### Step 5: Launch the Deployment Sample
 Launch PI System Deployment Sample for AWS to deploy PI System into your AWS environment.
 > **Note:** You are responsible for the cost of the AWS services used while running this deployment sample. Outside of those, there is no additional cost for using this deployment sample. For full details on costs, see the pricing pages for each AWS service in your deployment. Note that prices are subject to change.
 
-1. Run a test on the parameters and settings for your S3 bucket using the `TestParameters.ps1` PowerShell script located in the `scripts` folder. The `TestParametersReadme.md` file outlines how to run this script to test your parameters and settings. Fix any problems identified by the script.
-2. Click **Management & Governance** >  **CloudFormation** > **Stacks** > **Create stack** on the [Amazon Management Console](https://.console.aws.amazon.com/).
-3. Select the region by using the region selector dropdown list in the upper-right corner of the navigation bar. This region is where the network infrastructure for OSIsoft PI System will be built. 
-4. If necessary, change the region.
+
+1. Click **Management & Governance** >  **CloudFormation** > **Stacks** > **Create stack** on the [Amazon Management Console](https://console.aws.amazon.com/).
+2. Select the region by using the region selector dropdown list in the upper-right corner of the navigation bar. This region is where the network infrastructure for OSIsoft PI System will be built. 
+3. If necessary, change the region.
 >**Note:** While not required, matching the region of the AWS stack with the S3 bucket is a good idea to minimize any errors that may arise from timeouts, etc.
-5. On the **Create stack** page, select the options for **Template is ready** and **Upload a template file**. 
-6. Click **Choose file** and select the  `DSMasterStack.template` file located in the `templates` folder on your local computer. In a previous step, you extracted this from a zip file.
-7. On the **Specify stack details** page, provide a name for the stack. Review the parameters for the template. Provide values for the parameters that require input. For all other parameters, review the default settings and customize them as necessary. The following sections provide details about these parameters. 
-8. On the **Configure stack options** page, add tags, set permissions, and configure any other options for this deployment. For more information about these parameters, see [Setting AWS CloudFormation Stack Options](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-add-tags.html)
-9. Review your settings. Select the checkboxes acknowledging that AWS CloudFormation might create IAM resources with custom names and that AWS CloudFormation might require the following capability: **CAPABILITY_AUTO_EXPAND**. 
-10. Click **Create stack** to start the deployment.
+
+4. On the **Create stack** page, select the options for **Template is ready** and **Upload a template file**. 
+5. Click **Choose file** and select the  `DSMasterStack.template` file located in the `templates` folder on your local computer. In a previous step, you extracted this from a zip file.
+6. On the **Specify stack details** page, provide a name for the stack. Review the parameters for the template. Provide values for the parameters that require input. For all other parameters, review the default settings and customize them as necessary. **The following sections provide details about these parameters.**
+7. On the **Configure stack options** page, add tags, set permissions, and configure any other options for this deployment. For more information about these parameters, see [Setting AWS CloudFormation Stack Options](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-add-tags.html)
+8. Review your settings. Select the checkboxes acknowledging that AWS CloudFormation might create IAM resources with custom names and that AWS CloudFormation might require the following capability: **CAPABILITY\_AUTO\_EXPAND**. 
+9. Click **Create stack** to start the deployment.
 > **Note:** This deployment takes 1-4 hours to complete, so plan accordingly.
 
 #### Template Parameters 
@@ -253,7 +243,7 @@ The tables below are grouped under the same headers as used in the template itse
 ##### Global Configuration
  Parameter | Default | Description
 ---|---|---
-Availability Zones | *Requires Input* | List of Availability Zones (AZ) to use for the subnets in the VPC. Note: The logical order is preserved and only 2 AZs are used for this deployment. Two AZs are needed for an HA deployment.
+Availability Zones | *Requires Input* | List of Availability Zones (AZ) to use for the subnets in the VPC. Note: The logical order is preserved and only 2 AZs are used for this deployment. **Two AZs are needed for an HA deployment. If only one AZ is chosen with 'Deploy HA' set to true, the deployment will fail.**
 Deploy HA | true | Deploy 2 instances for HA
 Name Prefix | *Requires Input* | Prefix used when naming resources, inputs, and outputs. Maximum 24 characters
 Key Pair Name | *Requires Input* | Public/private key pairs allow you to securely connect to your instance after it launches
@@ -279,7 +269,7 @@ RestoreModePassword | *Requires Input* | Password for a separate Administrator a
 ---|---|---
 SQLServiceAccount | svc-sql0 | User name for the SQL Server Service Account. This Account is a Domain User.
 SQLFileServerInstanceType | t3.small | Amazon EC2 instance type for a fileserver used to share install media, witness and replication folders
-SQLNodeInstanceType | m4.xlarge | Amazon EC2 instance type for the first SQL Node
+SQLNodeInstanceType | r4.xlarge | Amazon EC2 instance type for the first SQL Node
 Volume1Size | 500 | Volume size for the SQL Data drive, in GB
 Volume2Size | 500 | Volume size for the SQL Logs drive, in GB
 Volume3Size | 500 | Volume size for the SQL Backups and TempDB drive, in GB  
@@ -302,15 +292,15 @@ PIANInstanceType | m5.xlarge | PI Analysis EC2 instance type
  Parameter | Default | Description
 ---|---|---
 DSS3BucketName | *Requires Input* | S3 bucket name for the Deployment Sample assets. Bucket name can include numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start or end with a hyphen (-).
-DSS3KeyPrefix | DeploySample | Name of the root folder in the S3 Deployment Samples bucket. Root folder name can include numbers, lowercase letters, uppercase letters, hyphens (-), and forward slash (/).
+DSS3KeyPrefix | DeploymentSample | Name of the root folder in the S3 Deployment Samples bucket. Root folder name can include numbers, lowercase letters, uppercase letters, hyphens (-), and forward slash (/).
 DSS3BucketRegion | us-west-1 | Region for Deployment Samples S3 Bucket. Used in S3 URL
 SetupKitsS3BucketName | *Requires Input* | S3 bucket name for the Setup Kit assets. This contains the install media for a PI System. Bucket name can include numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start or end with a hyphen (-).
 SetupKitsS3KeyPrefix | osisetupkits | Setup Kits key prefix can include numbers, lowercase letters, uppercase letters, hyphens (-), and forward slash (/). It cannot start or end with forward slash.
 SetupKitsS3BucketRegion | us-west-1 | Region for Setup Kits S3 Bucket. Used in S3 URL
-SetupKitsS3PIFileName | PI-Server_2018-SP3-Patch-3_.exe | File Name for the PI Server Setup Kit. File name can include numbers, lowercase letters, uppercase letters, underscores (_), and hyphens (-). It cannot start or end with a hyphen (-).
+SetupKitsS3PIFileName | AVEVA-PI-Server_2018-SP3-Patch-3_.exe | File Name for the PI Server Setup Kit. File name can include numbers, lowercase letters, uppercase letters, underscores (_), and hyphens (-). It cannot start or end with a hyphen (-).
 SetupKitsS3PIProductID | 63819281-e1d6-4c55-b797-b4d1ca9af535 | Product ID for the PI Server Setup Kit. Product ID can include numbers, lowercase letters, uppercase letters,and hyphens (-). It cannot start or end with a hyphen (-). This should not be modified.
-SetupKitsS3VisionFileName | PI-Vision_2020_.exe | File Name for the PI Vision Setup Kit. File name can include numbers, lowercase letters, uppercase letters, underscores (_), and hyphens (-). It cannot start or end with a hyphen (-).
-TestFileName | sample-pi_core-pi_core_deployment-amazon_web_services-master.zip | File Name for the test file. This should be the same as the downloaded zip file (ex: *sample-pi_core-pi_core_deployment-amazon_web_services-master.zip*). File name can include numbers, lowercase letters, uppercase letters, underscores (_), and hyphens (-). It cannot start or end with a hyphen (-).
+SetupKitsS3VisionFileName | AVEVA-PI-Vision_2020_.exe | File Name for the PI Vision Setup Kit. File name can include numbers, lowercase letters, uppercase letters, underscores (_), and hyphens (-). It cannot start or end with a hyphen (-).
+TestFileName | sample-pi_core-pi_core_deployment_tests-powershell-main.zip | File Name for the test file. This should be the same as the downloaded zip file (ex: *sample-pi_core-pi_core_deployment_tests-powershell-main.zip*). File name can include numbers, lowercase letters, uppercase letters, underscores (_), and hyphens (-). It cannot start or end with a hyphen (-).
 
 ### Step 6: Replace the Temporary PI License with a Full PI License
 In order to deploy a PI System on AWS using the deployment samples, a temporary PI license was used in the AWS stack. 
@@ -321,8 +311,8 @@ After a successful installation and deployment of PI System, you must generate a
 
 #### Generate a PI license:
 1. Create a Machine Signature File (MSF) using the pidiag utility. This utility is installed as part of your PI System deployment on the server that hosts the PI Data Archive.
-    > **Note:** For deployments in High Availability, create the MSF on the server that is the primary member. For more information on HA and collective members, see the *License a new PI Data Archive collective* section of the *PI Server Installation and Upgrade Guide*. You can find this guide on the OSIsoft [Customer Portal](https:\\my.osisoft.com).
-2. Generate the license file on the OSIsoft [Customer Portal](my.osisoft.com). For instructions on do this, see the *PI Server Installation and Upgrade Guide*, in the section [Generate a license file for a standalone deployment](https://livelibrary.osisoft.com/LiveLibrary/content/en/server-v12/GUID-0AE01ADF-771E-4BDA-B266-3C928BF79EBC). 
+    > **Note:** For deployments in High Availability, create the MSF on the server that is the primary member. For more information on HA and collective members, see the *License a new PI Data Archive collective* section of the *PI Server Installation and Upgrade Guide*. You can find this guide on the OSIsoft [Customer Portal](https://my.osisoft.com).
+2. Generate the license file on the OSIsoft [Customer Portal](https://my.osisoft.com). For instructions on how to do this, see the *PI Server Installation and Upgrade Guide*, in the section [Generate a license file for a standalone deployment](https://livelibrary.osisoft.com/LiveLibrary/content/en/server-v12/GUID-0AE01ADF-771E-4BDA-B266-3C928BF79EBC). 
 
 #### Replace the temporary license with the full PI license
 1.	Browse to the newly generated PI license in File Explorer and copy the license file.
@@ -365,7 +355,7 @@ The deployed PI System is configured in accordance with OSIsoft’s best practic
 
 * The service account credentials will be written to your account's **AWS Systems Manager Parameter Store** where the *Parameter Name* will match the service account name. The passwords will be stored as a **Secure String**. This provides a record of credentials used and allows for their secure use during deployment. These can be deleted after a deployment if desired or will be deleted when the stack is deleted.
 
-The knowledge base article **RL01302** discusses these  configurations and can be found at the OSIsoft [Customer Portal](my.osisoft.com).
+The knowledge base article **RL01302** discusses these  configurations and can be found at the OSIsoft [Customer Portal](https://my.osisoft.com).
 
 >**Note:** AWS provides a set of building blocks (e.g., Amazon EC2 and Amazon VPC) that customers can use to provision infrastructure for their applications. In this model, some security capabilities, such as physical security, are the responsibility of AWS and are highlighted in the AWS security whitepaper. Other areas, such as controlling access to applications, fall on the application developer.
 
@@ -418,7 +408,7 @@ PI System Deployment Sample for AWS configures the following security groups for
    
 * Q: When deploying the deployment samples, there are **Access Denied** errors when the EC2 is trying to download scripts or files from S3 buckets.
    
-    * A: The S3 *BucketName*, bucket prefix, and the files themselves have case sensitive URLs when being accessed. When the CloudFormation templates for EC2 instances attempt to download deployment scripts or files, it can result in an access denied area that results from a case mismatch or typo. Please double check that your S3 *BucketName* and folder structure matches with the values entered to deploy the deployment samples.
+    * A: The S3 \<BucketName\>, bucket prefix, and the files themselves have case sensitive URLs when being accessed. When the CloudFormation templates for EC2 instances attempt to download deployment scripts or files, it can result in an access denied area that results from a case mismatch or typo. Please double check that your S3 \<BucketName\> and folder structure matches with the values entered to deploy the deployment samples.
    
 * Q: I am unable to login to the RDGW node. 
    
@@ -435,13 +425,15 @@ PI System Deployment Sample for AWS configures the following security groups for
         2.	Open File Explorer and go to *C:\testResults*.
         3.	View the test results in your browser by double clicking one of the HTML result ﬁles.
 
-* Q: Deployment keeps failing when creating SQL Server.
-
-    * A: Try specifying a larger machine for the SQLNodeInstanceType parameter, e.g. R4.xlarge.
 
 * Q: In an HA deployment one instance of PI DA or PI AF successfully deploys but the other instance fails.
 
     * A: Delete the root stack, which deletes all nested stacks, and try to deploy the master again.
+
+* Q: My IP Address is not static and is bound to change. What should I do if I'm locked out of RDGW?
+	* A: In AWS under EC2s, in the left pane, under Network & Security, choose Security Groups. From the list find your RDGW Security group. Which should be in the form of **Prefix-RDGWSecurityGroup**. Click on the ID of the Security Group and under the Inbound rules, "Edit inbound rules." You may add your new IP address(s) to the list. 
+
+	> **Note**: you may add 0.0.0.0/0, but it is _**NOT recommended**_ as it will let any IP address have access to the gateway node. 
 
 ### Feedback
 
@@ -457,8 +449,3 @@ If your support question or issue is related to a non-modified sample (or test) 
 ### License
 
 PI System Deployment Samples are licensed under the [Apache 2 license](https://github.com/osisoft/OSI-Samples-PI-System/blob/master/LICENSE).
-
----
-
-For the main PI System samples page on master [ReadMe](https://github.com/osisoft/OSI-Samples-PI-System)  
-For the main OSIsoft samples page on master [ReadMe](https://github.com/osisoft/OSI-Samples)

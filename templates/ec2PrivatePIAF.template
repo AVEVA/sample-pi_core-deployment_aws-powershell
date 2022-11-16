@@ -1009,6 +1009,7 @@
         },
         "EC21": {
             "Type": "AWS::EC2::Instance",
+            "DependsOn" : "PIAF0WaitCondition",
             "Condition": "CreateHAResources",
             "Metadata": {
                 "AWS::CloudFormation::Authentication": {

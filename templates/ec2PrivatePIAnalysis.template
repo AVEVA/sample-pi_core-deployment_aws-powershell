@@ -601,9 +601,9 @@
 								},
 								"authentication": "S3AccessCreds"
 							},
-							"C:\\cfn\\Modules\\cChoco_2.4.zip": {
+							"C:\\cfn\\Modules\\cChoco_2.5.zip": {
                                 "source": {
-                                    "Fn::Sub": "https://${DSS3BucketName}.s3.${DSS3BucketRegion}.amazonaws.com/${DSS3KeyPrefix}/modules/cChoco_2.4.zip"
+                                    "Fn::Sub": "https://${DSS3BucketName}.s3.${DSS3BucketRegion}.amazonaws.com/${DSS3KeyPrefix}/modules/cChoco_2.5.zip"
                                 },
                                 "authentication": "S3AccessCreds"
                             },
@@ -894,7 +894,7 @@
 					"Ref": "PIAN0WaitHandle"
 				},
 				"Count": "2",
-				"Timeout": "2700"
+				"Timeout": "7200"
 			}
 		},
 		"PIAN0WaitHandle": {

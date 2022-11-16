@@ -285,7 +285,7 @@
         "DSS3KeyPrefix": {
             "AllowedPattern": "^[0-9a-zA-Z-]+([0-9a-zA-Z-/]*[0-9a-zA-Z-])*$",
             "ConstraintDescription": "Deployment Sample key prefix can include numbers, lowercase letters, uppercase letters, hyphens (-), and forward slash (/).",
-            "Default": "DeploySample",
+            "Default": "DeploymentSample",
             "Description": "Name of the root folder in the S3 Deployment Sample bucket. Root folder name can include numbers, lowercase letters, uppercase letters, hyphens (-), and forward slash (/). It cannot start or end with forward slash.",
             "Type": "String"
         },
@@ -305,27 +305,27 @@
         "SetupKitsS3PIFileName": {
             "AllowedPattern": "^[0-9a-zA-Z]+([0-9a-zA-Z-\/_. ]*[0-9a-zA-Z])*$",
             "ConstraintDescription": "PI Server Setup Kit File Name can include numbers, lowercase letters, uppercase letters, underscores (_), and hyphens (-). It cannot start or end with a hyphen (-).",
-            "Default": "PI-Server_2018-SP3-Patch-3_.exe",
+            "Default": "AVEVA-PI-Server_2018-SP3-Patch-4_.exe",
             "Description": "File Name for the PI Server Setup Kit. File name can include numbers, lowercase letters, uppercase letters, underscores (_), and hyphens (-). It cannot start or end with a hyphen (-).",
             "Type": "String"
         },
         "SetupKitsS3PIProductID": {
             "AllowedPattern": "^[0-9a-zA-Z]+([0-9a-zA-Z-]*[0-9a-zA-Z])*$",
-            "Default": "63819281-e1d6-4c55-b797-b4d1ca9af535",
+            "Default": "4b23fd33-f306-44f5-9bf5-28024385023e",
             "ConstraintDescription": "PI Server Setup Kit Product ID can include numbers, lowercase letters, uppercase letters, and hyphens (-). It cannot start or end with a hyphen (-).",
             "Description": "Product ID for the PI Server Setup Kit. Product ID can include numbers, lowercase letters, uppercase letters,and hyphens (-). It cannot start or end with a hyphen (-).",
             "Type": "String"
         },
         "SetupKitsS3VisionFileName": {
             "AllowedPattern": "^[0-9a-zA-Z]+([0-9a-zA-Z-\/_. ]*[0-9a-zA-Z])*$",
-            "Default": "PI-Vision_2020_.exe",
+            "Default": "AVEVA-PI-Vision_2022_.exe",
             "ConstraintDescription": "PI Vision Setup Kit File Name can include numbers, lowercase letters, uppercase letters, underscores (_), and hyphens (-). It cannot start or end with a hyphen (-).",
             "Description": "File Name for the PI Vision Setup Kit. File name can include numbers, lowercase letters, uppercase letters, underscores (_), and hyphens (-). It cannot start or end with a hyphen (-).",
             "Type": "String"
         },
         "TestFileName": {
             "AllowedPattern": "^[0-9a-zA-Z]+([0-9a-zA-Z-\/_. ]*[0-9a-zA-Z])*$",
-            "Default": "PI-System-Deployment-Tests.zip",
+            "Default": "sample-pi_core-pi_core_deployment_tests-powershell-main.zip",
             "ConstraintDescription": "Test File Name can include numbers, lowercase letters, uppercase letters, underscores (_), and hyphens (-). It cannot start or end with a hyphen (-).",
             "Description": "File Name for the test file. File name can include numbers, lowercase letters, uppercase letters, underscores (_), and hyphens (-). It cannot start or end with a hyphen (-).",
             "Type": "String"
@@ -407,7 +407,7 @@
                 "r4.xlarge",
                 "r4.2xlarge"
             ],
-            "Default": "m4.xlarge",
+            "Default": "r4.xlarge",
             "Description": "Amazon EC2 instance type for the first SQL Node",
             "Type": "String"
 		},

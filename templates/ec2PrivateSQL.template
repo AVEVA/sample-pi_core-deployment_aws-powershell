@@ -712,6 +712,12 @@
                                     "Fn::Sub": "https://${DSS3BucketName}.s3.${DSS3BucketRegion}.amazonaws.com/${DSS3KeyPrefix}/scripts/SQL/Disable-CredSSP.ps1"
                                 },
                                 "authentication" : "S3AccessCreds"
+                            },
+                            "c:\\cfn\\modules\\xPendingReboot_0.4.zip": {
+                                "source": {
+                                    "Fn::Sub": "https://${DSS3BucketName}.s3.${DSS3BucketRegion}.amazonaws.com/${DSS3KeyPrefix}/modules/xPendingReboot_0.4.zip"
+                                },
+                                "authentication": "S3AccessCreds"
                             }
                         }
                     },
@@ -1097,6 +1103,12 @@
                                     "Fn::Sub": "https://${DSS3BucketName}.s3.${DSS3BucketRegion}.amazonaws.com/${DSS3KeyPrefix}/scripts/SQL/Disable-CredSSP.ps1"
                                 },
                                 "authentication" : "S3AccessCreds"
+                            },
+                            "c:\\cfn\\modules\\xPendingReboot_0.4.zip": {
+                                "source": {
+                                    "Fn::Sub": "https://${DSS3BucketName}.s3.${DSS3BucketRegion}.amazonaws.com/${DSS3KeyPrefix}/modules/xPendingReboot_0.4.zip"
+                                },
+                                "authentication": "S3AccessCreds"
                             }
                         }
                     },
@@ -1187,7 +1199,7 @@
                                 "waitAfterCompletion": "0"
                             },
                             "f-enable-credssp": {
-                                "command": "powershell.exe -ExecutionPolicy RemoteSigned -Command \"C:\\cfn\\scripts\\Enable-CredSSP.ps1",
+                                "command": "powershell.exe -ExecutionPolicy RemoteSigned -Command \"C:\\cfn\\scripts\\Enable-CredSSP.ps1\"",
                                 "waitAfterCompletion": "0"
                             },
                             "g-reboot": {
@@ -1952,7 +1964,7 @@
                                 "waitAfterCompletion": "0"
                             },
                             "f-enable-credssp": {
-                                "command": "powershell.exe -ExecutionPolicy RemoteSigned -Command \"C:\\cfn\\scripts\\Enable-CredSSP.ps1",
+                                "command": "powershell.exe -ExecutionPolicy RemoteSigned -Command \"C:\\cfn\\scripts\\Enable-CredSSP.ps1\"",
                                 "waitAfterCompletion": "0"
                             },
                             "g-reboot": {

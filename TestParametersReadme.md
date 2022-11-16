@@ -13,7 +13,7 @@ This guide explains how to use file `TestParameters.ps1`, a powershell script lo
    Parameter Name | Example | Description
    -- | -- | --
    DSS3BucketName | osisoft-deploySamples | The name of the bucket containing the Deployment Sample files available in this repository. Per AWS limitations, this can contain lowercase letters, numbers, and hyphens.
-   DSS3KeyPrefix | deploysample | The name of the root folder containing the Deployment Sample folders `modules`, `scripts`, and `templates`. This can contain mixed case letters (names are case-sensitive), numbers, hyphens (-), and forward slashes (/).
+   DSS3KeyPrefix | DeploymentSample | The name of the root folder containing the Deployment Sample folders `modules`, `scripts`, and `templates`. This can contain mixed case letters (names are case-sensitive), numbers, hyphens (-), and forward slashes (/).
    DSS3BucketRegion | us-west-1 | The region in which your S3 bucket is hosted. The Deployment Sample works best if the buckets are in the same region as your deployed stack, but any region may be used. See [AWS API Gateway documentation](https://docs.aws.amazon.com/general/latest/gr/rande.html) if you are unsure of the designation for your region.
    SetupKitsS3BucketName | osisoft-setupkits | The name of the bucket containing the Setup Kits acquired from OSIsoft, for PI Server and PI Vision. Per AWS limitations, this can contain lowercase letters, numbers, and hyphens.
    SetupKitsS3KeyPrefix | 2018 | The name of the folder containing the folders `PIServer` and `PIVision` which in turn contain their respective installers. This can contain mixed case letters (names are case-sensitive), numbers, hyphens (-), and forward slashes (/).
